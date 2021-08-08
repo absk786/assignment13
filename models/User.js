@@ -1,7 +1,7 @@
-const {Model, DataTypes, STRING} =  require('sequelize')
-const sequelize = require('sequelize')
+const {Model, DataTypes} = require('sequelize');
+const sequelize = require('../config/connection');
+
 const bcrypt = require('bcypt')
-const exp = require('constants')
 class User extends Model {
 
 }
@@ -44,7 +44,7 @@ User.init (
     timestamps:true,
     freezeTableName:true,
     underscored:true,
-    modelName:'User'
+    modelName:'sser'
 }
 )
 
