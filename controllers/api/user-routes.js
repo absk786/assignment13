@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
+console.log("user routes loaded")
 const { Post, User, Comment } = require('../../models');
 
 //get all users without password
@@ -36,11 +37,14 @@ router.get('/:id', (req,res) => {
 
 //create a user
 router.post('/',(req,res) => {
+    console.log("======================================================================"),
     User.create({
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
-    }).then(dbUserData => res.json(dbUserData))
+    }).then(dbUserData => {
+    console.log("======================================================================"),
+        res.json(dbUserData)})
     .catch(err => {
         console.log(err)
         res.status(500).json(err)
@@ -48,7 +52,7 @@ router.post('/',(req,res) => {
 })
 
 router.delete('/:id',(req,res) => {
-    User.delete({
+    User.destroy({
         where:{
             id:req.params.id
         }

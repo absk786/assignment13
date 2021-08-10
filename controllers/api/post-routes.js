@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Post, User, Comment } = require('../../models');
+console.log("==============POST ROUTES PAGE CALLED=================================")
+
 
 router.get('/', (req,res)=>{
     Post.findAll({
@@ -41,13 +43,16 @@ router.get('/:id',(req,res) =>{
 
 //create a post
 router.post('/', (req,res) => {
+    console.log("==================CREATE POST CALLED?=============================")
     Post.create({
         where:{
-            title:req.body.title,
-            post_url:req.body.post_url,
-            user_id:req.body.user_id
+            title: req.body.title,
+            post_url: req.body.post_url,
+            user_id: req.body.user_id
         }
-    }).then(dbPostData => res.json(dbPostData))
+    }).then(dbPostData => {
+        console.log(req.body)
+        res.json(dbPostData)})
     .catch(err => {
         console.log(err)
         res.status(500).json(err)
@@ -82,7 +87,7 @@ router.put('/:id', (req,res) => {
 })
 
 router.delete('/:id',(req,res)=> {
-    Post.delete({
+    Post.destroy({
         where:{
             id:req.param.id
         }
