@@ -7,10 +7,22 @@ console.log("==============POST ROUTES PAGE CALLED==============================
 router.get('/', (req,res)=>{
     Post.findAll({
         order:[['created_at', 'DESC']],
-        include:{
-            model:Post,
-            attributes:['username']
-        }
+        include:[
+            //include the comment model here
+            {
+              model:Comment,
+              attributes:['id','comment_text','post_id','user_id','created_at'],
+              include:{
+                model:User,
+                attributes:['username']
+              }
+            },
+            {
+              model: User,
+              attributes: ['username']
+    
+            }
+          ],
     }).then(dbPostData => {
         res.json(dbPostData)
     }).catch(err => {
@@ -45,11 +57,9 @@ router.get('/:id',(req,res) =>{
 router.post('/', (req,res) => {
     console.log("==================CREATE POST CALLED?=============================")
     Post.create({
-        where:{
             title: req.body.title,
             post_url: req.body.post_url,
             user_id: req.body.user_id
-        }
     }).then(dbPostData => {
         console.log(req.body)
         res.json(dbPostData)})

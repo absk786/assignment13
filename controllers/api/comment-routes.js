@@ -4,28 +4,26 @@ const { Post, User, Comment } = require('../../models');
 
 //get all comments
 router.get('/', (req,res)=>{
-    // Comment.findAll({
-    //     order:[['created_at', 'DESC']],
-    //     include:{
-    //         model:Post,
-    //         attributes:['username']
-    //     }
-    // }).then(dbPostData => {
-    //     res.json(dbPostData)
-    // }).catch(err => {
-    //     console.log(err)
-    //     res.status(500).json(err)
-    // })
+    Comment.findAll({
+        order:[['created_at', 'DESC']],
+        include:{
+            model:Post,
+            attributes:['username']
+        }
+    }).then(dbPostData => {
+        res.json(dbPostData)
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json(err)
+    })
 })
 
 //create a comment
 router.post('/', (req,res) => {
     Comment.create({
-        where:{
             comment_text:req.body.comment_text,
             user_id:req.body.user_id,
             post_id:req.body.post_id
-        }
     }).then(dbCommentData => res.json(dbCommentData))
     .catch(err => {
         console.log(err)

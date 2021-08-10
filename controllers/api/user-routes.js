@@ -50,7 +50,7 @@ router.post('/',(req,res) => {
         res.status(500).json(err)
     })
 })
-
+//delete a user
 router.delete('/:id',(req,res) => {
     User.destroy({
         where:{
